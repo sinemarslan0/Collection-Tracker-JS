@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Series Collection</title>
+
+  
+</head>
+<body>
+    <header>
+      <h1>Welcome to my Series Collection!</h1>
+    </header>
+
+  <style>
+    body {
+        height: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+    h1 {
+        margin-top: 20px;
+    }
+    table {
+        width: 100%;
+    }
+    td {
+        padding: 8px;
+        text-align: left;
+    }
+    th{
+      width: 33%;
+      padding: 8px;
+      background-color: white;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #ddd;
+    }
+    button {
+        padding: 5px 10px;
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+  </style>
+
+  <button onclick="addNewRow()">Add new series</button>
+
+  <table id="bookTable">
+      <thead>
+          <tr>
+              <th>Series Title</th>
+              <th>Number of Seasons</th>
+          </tr>
+      </thead>
+      <tbody>
+      </tbody>
+  </table>
+
+  <script>
+    function addNewRow() {
+        var table = document.getElementById("bookTable").getElementsByTagName('tbody')[0];
+        var newRow = table.insertRow(table.rows.length);
+        newRow.innerHTML = `
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td>
+                <button onclick="saveRow(this)">Save</button>
+                <button onclick="removeRow(this)">Remove</button>
+            </td>`;
+    }
+    
+    function saveRow(button) {
+        var row = button.parentNode.parentNode;
+        var titleInput = row.cells[0].querySelector('input[type="text"]');
+        var authorInput = row.cells[1].querySelector('input[type="text"]');
+        var title = titleInput.value.trim();
+        var author = authorInput.value.trim();
+    
+        titleInput.setAttribute("disabled", true);
+        authorInput.setAttribute("disabled", true);
+    
+        button.innerHTML = "Edit";
+        button.setAttribute("onclick", "editRow(this)");
+    }
+    
+    function editRow(button) {
+        var row = button.parentNode.parentNode;
+        var titleInput = row.cells[0].querySelector('input[type="text"]');
+        var authorInput = row.cells[1].querySelector('input[type="text"]');
+    
+        titleInput.removeAttribute("disabled");
+        authorInput.removeAttribute("disabled");
+    
+        button.innerHTML = "Save";
+        button.setAttribute("onclick", "saveRow(this)");
+    }
+    
+    function removeRow(button) {
+        var row = button.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    }
+    </script>
+
+</body>
+</html>
